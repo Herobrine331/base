@@ -6,16 +6,16 @@
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Coinbase">
+    <meta name="apple-mobile-web-app-title" content="Base Wallet">
     
-    <link rel="apple-touch-icon" href="https://altcoinsbox.com/wp-content/uploads/2023/01/coinbase-logo.webp">
-    <link rel="icon" href="https://altcoinsbox.com/wp-content/uploads/2023/01/coinbase-logo.webp">
+    <link rel="apple-touch-icon" href="https://github.com/base-org.png?size=180">
+    <link rel="icon" type="image/png" href="https://github.com/base-org.png?size=180">
 
     <title>Base Wallet</title>
     <style>
         :root {
             --bg: #000000;
-            --cb-blue: #0052ff;
+            --base-blue: #0052ff;
             --dark-gray: #1e1e20;
             --text-dim: #8e8e93;
             --success: #2ecc71;
@@ -48,6 +48,7 @@
             position: relative;
         }
 
+        /* Header Area */
         .header {
             display: flex;
             justify-content: space-between;
@@ -62,13 +63,20 @@
             cursor: pointer;
         }
 
-        .base-logo-svg { width: 34px; height: 34px; }
+        .base-logo-png { 
+            width: 34px; 
+            height: 34px; 
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
         .user-id { font-weight: 600; font-size: 16px; }
         .chevron-down { width: 12px; height: 12px; fill: var(--text-dim); margin-left: -2px; }
 
         .nav-actions { display: flex; gap: 20px; align-items: center; }
         .nav-icon { width: 22px; height: 22px; fill: white; }
 
+        /* Balance Display */
         .balance-display {
             font-size: 44px;
             font-weight: 700;
@@ -76,6 +84,7 @@
             letter-spacing: -1.2px;
         }
 
+        /* Blue Button with Glossy Glare */
         .btn-row { 
             display: grid; 
             grid-template-columns: 1fr 1fr 1fr; 
@@ -96,7 +105,10 @@
             overflow: hidden;
         }
 
-        .btn-blue { background: var(--cb-blue); }
+        .btn-blue { 
+            background: var(--base-blue); 
+        }
+
         .btn-blue::before {
             content: "";
             position: absolute;
@@ -104,36 +116,25 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 50%);
+            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%);
             pointer-events: none;
         }
 
+        /* Tabs */
         .tabs {
             display: flex;
             gap: 28px;
             border-bottom: 0.5px solid var(--border-line);
             margin-bottom: 20px;
         }
-
         .tab { padding-bottom: 14px; color: var(--text-dim); font-weight: 600; font-size: 16px; }
-        .tab.active { color: var(--cb-blue); border-bottom: 2.5px solid var(--cb-blue); }
+        .tab.active { color: var(--base-blue); border-bottom: 2.5px solid var(--base-blue); }
 
-        .network-pill {
-            background: var(--dark-gray);
-            width: fit-content;
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 28px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
+        /* Asset Row */
         .asset-row { display: flex; justify-content: space-between; align-items: center; }
         .asset-left { display: flex; align-items: center; gap: 14px; }
         .btc-icon { width: 44px; height: 44px; }
+
         .asset-name { font-weight: 600; font-size: 18px; }
         .asset-change { color: var(--success); font-size: 14px; margin-top: 2px; display: flex; align-items: center; gap: 2px;}
 
@@ -141,6 +142,7 @@
         .asset-val-usd { font-weight: 600; font-size: 17px; }
         .asset-val-qty { color: var(--text-dim); font-size: 14px; margin-top: 3px; }
 
+        /* Footer */
         .footer {
             position: absolute;
             bottom: 0;
@@ -155,7 +157,7 @@
             padding-bottom: env(safe-area-inset-bottom);
         }
         .footer-svg { width: 26px; height: 26px; fill: var(--text-dim); }
-        .footer-svg.active { fill: var(--cb-blue); }
+        .footer-svg.active { fill: var(--base-blue); }
     </style>
 </head>
 <body>
@@ -163,8 +165,11 @@
 <div class="app">
     <div class="header">
         <div class="profile-btn" onclick="openAdmin()">
-            <svg class="base-logo-svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#0052FF"/><path d="M16 8C11.58 8 8 11.58 8 16s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 13.6c-3.09 0-5.6-2.51-5.6-5.6s2.51-5.6 5.6-5.6 5.6 2.51 5.6 5.6-2.51 5.6-5.6 5.6z" fill="white"/></svg>
-            <div class="user-id"><span id="user-label">gabe2222.cb.id</span> <svg class="chevron-down" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg></div>
+            <img src="https://github.com/base-org.png?size=180" class="base-logo-png" alt="Base">
+            <div class="user-id">
+                <span id="user-label">gabe2222.cb.id</span> 
+                <svg class="chevron-down" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg>
+            </div>
         </div>
         <div class="nav-actions">
             <svg class="nav-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
@@ -186,8 +191,6 @@
         <div class="tab">NFTs</div>
         <div class="tab">DeFi</div>
     </div>
-
-    <div class="network-pill">Networks (2) <svg style="width:10px; height:10px; fill:white;" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg></div>
 
     <div class="asset-row">
         <div class="asset-left">
@@ -213,12 +216,10 @@
 </div>
 
 <script>
-    // Load saved data or use defaults
     let chosenUsd = parseFloat(localStorage.getItem('savedBalance')) || 10.59;
     let btcPrice = 65000;
     let savedUsername = localStorage.getItem('savedUsername') || "gabe2222.cb.id";
 
-    // Set initial username display
     document.getElementById('user-label').innerText = savedUsername;
 
     async function sync() {
@@ -240,13 +241,11 @@
 
     function openAdmin() {
         const name = prompt("Name:", document.getElementById('user-label').innerText);
-        const val = prompt("Larp Balance ($):", chosenUsd);
-        
+        const val = prompt("Flex Balance ($):", chosenUsd);
         if (name) {
             document.getElementById('user-label').innerText = name;
             localStorage.setItem('savedUsername', name);
         }
-        
         if (val && !isNaN(val)) { 
             chosenUsd = parseFloat(val); 
             localStorage.setItem('savedBalance', chosenUsd);
