@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base | Onchain</title>
+    <style>
+        :root {
+            --base-blue: #0052ff;
+            --bg-black: #000000;
+            --text-main: #ffffff;
+            --text-dim: #8a8a8e;
+            --border-gray: #1e1e1e;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-black);
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 414px;
+            height: 100vh;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            margin-bottom: 24px;
+        }
+
+        .profile-trigger {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 12px;
+        }
+
+        /* Official Base Logo Icon CSS */
+        .base-icon-svg {
+            width: 38px;
+            height: 38px;
+            background-color: var(--base-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .base-icon-inner {
+            width: 20px;
+            height: 20px;
+            border: 3.5px solid white;
+            border-radius: 50%;
+        }
+
+        .user-meta {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .network-title {
+            font-size: 19px;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+        }
+
+        .username {
+            font-size: 13px;
+            color: var(--text-dim);
+            font-weight: 500;
+        }
+
+        /* Balance Display */
+        .balance-section {
+            margin-bottom: 32px;
+        }
+
+        .main-amount {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            margin-bottom: 4px;
+        }
+
+        .balance-sub {
+            color: #00d395; /* Success Green */
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        /* Action Buttons */
+        .action-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            flex: 1;
+            height: 52px;
+            border-radius: 26px;
+            border: none;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-blue { background-color: var(--base-blue); color: white; }
+        .btn-gray { background-color: #161618; color: white; }
+
+        /* Asset List Styling */
+        .asset-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 16px;
+        }
+
+        .asset-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-top: 1px solid var(--border-gray);
+        }
+
+        .coin-branding {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .btc-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #f7931a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 22px;
+            color: white;
+        }
+
+        .coin-info-text .name { font-weight: 600; font-size: 17px; }
+        .coin-info-text .network { color: var(--text-dim); font-size: 13px; margin-top: 2px; }
+
+        .price-info { text-align: right; }
+        .price-usd { font-weight: 600; font-size: 17px; }
+        .price-crypto { color: var(--text-dim); font-size: 14px; margin-top: 2px; }
+
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="header">
+        <div class="profile-trigger" onclick="openLarpMenu()">
+            <div class="base-icon-svg">
+                <div class="base-icon-inner"></div>
+            </div>
+            <div class="user-meta">
+                <span class="network-title">Base</span>
+                <span class="username" id="user-display">gabe2222.base.eth</span>
+            </div>
+        </div>
+        <div style="font-size: 24px;">⋮</div>
+    </div>
+
+    <div class="balance-section">
+        <div class="main-amount" id="total-balance">$0.00</div>
+        <div class="balance-sub">↗ 1.24% Today</div>
+    </div>
+
+    <div class="action-row">
+        <button class="btn btn-blue">Buy</button>
+        <button class="btn btn-gray">Swap</button>
+        <button class="btn btn-gray">Send</button>
+    </div>
+
+    <div class="asset-label">Your Assets</div>
+
+    <div class="asset-item">
+        <div class="coin-branding">
+            <div class="btc-logo">₿</div>
+            <div class="coin-info-text">
+                <div class="name">Bitcoin</div>
+                <div class="network">Base Network</div>
+            </div>
+        </div>
+        <div class="price-info">
+            <div class="price-usd" id="btc-usd">$0.00</div>
+            <div class="price-crypto" id="btc-qty">0.00 BTC</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Initial data
+    let currentBtcAmount = 0.000142;
+
+    // Fetch Live Price and Update UI
+    async function refreshMarketData() {
+        try {
+            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+            const data = await response.json();
+            const btcPrice = data.bitcoin.usd;
+            
+            const totalValue = (btcPrice * currentBtcAmount).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+            });
+
+            document.getElementById('total-balance').innerText = totalValue;
+            document.getElementById('btc-usd').innerText = totalValue;
+            document.getElementById('btc-qty').innerText = currentBtcAmount.toFixed(6) + " BTC";
+        } catch (err) {
+            console.warn("Price API limit hit or offline.");
+        }
+    }
+
+    // The "Larp" Modifier Function
+    function openLarpMenu() {
+        const nameInput = prompt("Change Wallet Name:", document.getElementById('user-display').innerText);
+        const btcInput = prompt("Enter BTC Amount (e.g., 5.25):", currentBtcAmount);
+
+        if (nameInput) {
+            document.getElementById('user-display').innerText = nameInput;
+        }
+        
+        if (btcInput !== null && !isNaN(btcInput)) {
+            currentBtcAmount = parseFloat(btcInput);
+            refreshMarketData();
+        }
+    }
+
+    // Run on startup
+    refreshMarketData();
+    // Auto-update price every 20 seconds
+    setInterval(refreshMarketData, 20000);
+</script>
+
+</body>
+</html>
