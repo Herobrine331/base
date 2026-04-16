@@ -55,21 +55,18 @@
             cursor: pointer;
         }
 
-        .base-logo {
+        .base-logo-container {
             width: 34px;
             height: 34px;
-            background: var(--cb-blue);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .base-logo-inner {
-            width: 18px;
-            height: 18px;
-            border: 3.5px solid white;
-            border-radius: 50%;
+        .base-logo-container svg {
+            width: 100%;
+            height: 100%;
         }
 
         .user-id { font-weight: 600; font-size: 16px; }
@@ -86,7 +83,7 @@
             letter-spacing: -1.2px;
         }
 
-        /* Buttons */
+        /* Buttons with specified glare effect */
         .btn-row { 
             display: grid; 
             grid-template-columns: 1fr 1fr 1fr; 
@@ -103,10 +100,29 @@
             justify-content: center;
             font-weight: 600;
             font-size: 15px;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-blue { 
             background: linear-gradient(135deg, #004dff, #0052ff); 
+        }
+
+        /* Glare overlay */
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        /* Glare appears only on the blue (Buy) button */
+        .btn-blue::after {
+            left: 0%;
         }
 
         /* Tabs */
@@ -199,7 +215,12 @@
 <div class="app">
     <div class="header">
         <div class="profile-btn" onclick="openAdmin()">
-            <div class="base-logo"><div class="base-logo-inner"></div></div>
+            <div class="base-logo-container">
+                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="16" fill="#0052FF"/>
+                    <path d="M16 8C11.5817 8 8 11.5817 8 16C8 20.4183 11.5817 24 16 24C20.4183 24 24 20.4183 24 16C24 11.5817 20.4183 8 16 8ZM16 21.6C12.9134 21.6 10.4 19.0866 10.4 16C10.4 12.9134 12.9134 10.4 16 10.4C19.0866 10.4 21.6 12.9134 21.6 16C21.6 19.0866 19.0866 21.6 16 21.6Z" fill="white"/>
+                </svg>
+            </div>
             <div class="user-id">
                 <span id="user-label">gabe2222.cb.id</span> 
                 <svg class="chevron-down" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg>
@@ -218,7 +239,7 @@
     <div class="balance-display" id="bal-main">$10.59</div>
 
     <div class="btn-row">
-        <div class="btn btn-blue">Buy</div>
+        <div class="btn btn-blue btn-glare">Buy</div>
         <div class="btn">Swap</div>
         <div class="btn">Cash out</div>
     </div>
