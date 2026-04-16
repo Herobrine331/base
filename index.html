@@ -2,259 +2,303 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base | Onchain</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Base Wallet</title>
     <style>
         :root {
-            --base-blue: #0052ff;
-            --bg-black: #000000;
-            --text-main: #ffffff;
-            --text-dim: #8a8a8e;
-            --border-gray: #1e1e1e;
+            --bg: #000000;
+            --cb-blue: #0052ff;
+            --dark-gray: #1e1e20;
+            --text-dim: #8e8e93;
+            --success: #2ecc71;
+            --border-line: #1a1a1a;
         }
 
-        body {
-            margin: 0;
-            background-color: var(--bg-black);
-            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
+        * { 
+            box-sizing: border-box; 
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif; 
             -webkit-font-smoothing: antialiased;
         }
 
-        .app-container {
+        body { 
+            margin: 0; 
+            background: var(--bg); 
+            color: white; 
+            display: flex; 
+            justify-content: center; 
+            overflow: hidden; 
+        }
+
+        .app {
             width: 100%;
-            max-width: 414px;
+            max-width: 430px;
             height: 100vh;
-            padding: 16px;
             display: flex;
             flex-direction: column;
+            padding: 0 16px;
+            position: relative;
         }
 
-        /* Header Section */
+        /* Header Area - Shifted to Top */
         .header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 8px 0;
-            margin-bottom: 24px;
+            align-items: center;
+            padding: 20px 0 15px 0;
         }
 
-        .profile-trigger {
+        .profile-btn {
             display: flex;
             align-items: center;
+            gap: 10px;
             cursor: pointer;
-            gap: 12px;
         }
 
-        /* Official Base Logo Icon CSS */
-        .base-icon-svg {
-            width: 38px;
-            height: 38px;
-            background-color: var(--base-blue);
+        .base-logo {
+            width: 34px;
+            height: 34px;
+            background: var(--cb-blue);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
         }
 
-        .base-icon-inner {
-            width: 20px;
-            height: 20px;
+        .base-logo::after {
+            content: "";
+            width: 17px;
+            height: 17px;
             border: 3.5px solid white;
             border-radius: 50%;
         }
 
-        .user-meta {
-            display: flex;
-            flex-direction: column;
-        }
+        .user-id { font-weight: 600; font-size: 16px; }
+        .chevron { color: var(--text-dim); font-size: 13px; margin-left: -2px; }
 
-        .network-title {
-            font-size: 19px;
-            font-weight: 700;
-            letter-spacing: -0.4px;
-        }
-
-        .username {
-            font-size: 13px;
-            color: var(--text-dim);
-            font-weight: 500;
-        }
+        .nav-actions { display: flex; gap: 20px; font-size: 22px; }
 
         /* Balance Display */
-        .balance-section {
-            margin-bottom: 32px;
-        }
-
-        .main-amount {
-            font-size: 48px;
+        .balance-display {
+            font-size: 44px;
             font-weight: 700;
-            letter-spacing: -1.5px;
-            margin-bottom: 4px;
+            margin: 10px 0 25px 0;
+            letter-spacing: -1.2px;
         }
 
-        .balance-sub {
-            color: #00d395; /* Success Green */
-            font-size: 15px;
-            font-weight: 600;
-        }
-
-        /* Action Buttons */
-        .action-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 40px;
+        /* Buttons (Buy, Swap, Cash out) */
+        .btn-row { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr 1fr; 
+            gap: 10px; 
+            margin-bottom: 30px; 
         }
 
         .btn {
-            flex: 1;
+            background: var(--dark-gray);
             height: 52px;
             border-radius: 26px;
-            border: none;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .btn-blue { background-color: var(--base-blue); color: white; }
-        .btn-gray { background-color: #161618; color: white; }
-
-        /* Asset List Styling */
-        .asset-label {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 16px;
-        }
-
-        .asset-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 0;
-            border-top: 1px solid var(--border-gray);
-        }
-
-        .coin-branding {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .btc-logo {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: #f7931a;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            font-size: 22px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .btn-blue { 
+            background: linear-gradient(135deg, #004dff, #0052ff); 
+        }
+
+        /* Tabs (Crypto, NFTs, DeFi) */
+        .tabs {
+            display: flex;
+            gap: 28px;
+            border-bottom: 0.5px solid var(--border-line);
+            margin-bottom: 20px;
+        }
+
+        .tab { 
+            padding-bottom: 14px; 
+            color: var(--text-dim); 
+            font-weight: 600; 
+            font-size: 16px;
+        }
+
+        .tab.active { 
+            color: var(--cb-blue); 
+            border-bottom: 2.5px solid var(--cb-blue); 
+        }
+
+        /* Network Selector */
+        .network-pill {
+            background: var(--dark-gray);
+            width: fit-content;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Bitcoin Asset Row */
+        .asset-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .asset-left { display: flex; align-items: center; gap: 14px; }
+        
+        .btc-icon {
+            width: 44px;
+            height: 44px;
+            background: #f7931a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
             color: white;
         }
 
-        .coin-info-text .name { font-weight: 600; font-size: 17px; }
-        .coin-info-text .network { color: var(--text-dim); font-size: 13px; margin-top: 2px; }
+        .asset-name { font-weight: 600; font-size: 18px; }
+        .asset-change { color: var(--success); font-size: 14px; margin-top: 2px; }
 
-        .price-info { text-align: right; }
-        .price-usd { font-weight: 600; font-size: 17px; }
-        .price-crypto { color: var(--text-dim); font-size: 14px; margin-top: 2px; }
+        .asset-right { text-align: right; }
+        .asset-val-usd { font-weight: 600; font-size: 17px; }
+        .asset-val-qty { color: var(--text-dim); font-size: 14px; margin-top: 3px; }
 
+        /* Footer Navigation Bar */
+        .footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            background: var(--bg);
+            border-top: 0.5px solid var(--border-line);
+            display: flex;
+            justify-content: space-around;
+            padding-top: 12px;
+            font-size: 26px;
+        }
+
+        .footer-icon { color: var(--text-dim); }
+        .footer-icon.active { color: var(--cb-blue); }
+
+        .home-bar {
+            position: absolute;
+            bottom: 8px;
+            width: 135px;
+            height: 5px;
+            background: white;
+            border-radius: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     </style>
 </head>
 <body>
 
-<div class="app-container">
+<div class="app">
     <div class="header">
-        <div class="profile-trigger" onclick="openLarpMenu()">
-            <div class="base-icon-svg">
-                <div class="base-icon-inner"></div>
-            </div>
-            <div class="user-meta">
-                <span class="network-title">Base</span>
-                <span class="username" id="user-display">gabe2222.base.eth</span>
+        <div class="profile-btn" onclick="openAdmin()">
+            <div class="base-logo"></div>
+            <div class="user-id">
+                <span id="user-label">gabe2222.cb.id</span> 
+                <span class="chevron">⌵</span>
             </div>
         </div>
-        <div style="font-size: 24px;">⋮</div>
+        <div class="nav-actions">
+            <span>🔍</span><span>🔳</span>
+            <span style="position:relative;">⚙️
+                <div style="width:9px; height:9px; background:#ff3b30; border-radius:50%; position:absolute; top:-2px; right:-2px; border:2.5px solid black;"></div>
+            </span>
+        </div>
     </div>
 
-    <div class="balance-section">
-        <div class="main-amount" id="total-balance">$0.00</div>
-        <div class="balance-sub">↗ 1.24% Today</div>
+    <div class="balance-display" id="bal-main">$10.59</div>
+
+    <div class="btn-row">
+        <div class="btn btn-blue">Buy</div>
+        <div class="btn">Swap</div>
+        <div class="btn">Cash out</div>
     </div>
 
-    <div class="action-row">
-        <button class="btn btn-blue">Buy</button>
-        <button class="btn btn-gray">Swap</button>
-        <button class="btn btn-gray">Cash Out</button>
+    <div class="tabs">
+        <div class="tab active">Crypto</div>
+        <div class="tab">NFTs</div>
+        <div class="tab">DeFi</div>
     </div>
 
-    <div class="asset-label">Your Assets</div>
+    <div class="network-pill">Networks (2) <span style="font-size:10px; margin-left:2px;">⌵</span></div>
 
-    <div class="asset-item">
-        <div class="coin-branding">
-            <div class="btc-logo">₿</div>
-            <div class="coin-info-text">
-                <div class="name">Bitcoin</div>
-                <div class="network">Base Network</div>
+    <div class="asset-row">
+        <div class="asset-left">
+            <div class="btc-icon">₿</div>
+            <div>
+                <div class="asset-name">Bitcoin</div>
+                <div class="asset-change">↗ 0.07%</div>
             </div>
         </div>
-        <div class="price-info">
-            <div class="price-usd" id="btc-usd">$0.00</div>
-            <div class="price-crypto" id="btc-qty">0.00 BTC</div>
+        <div class="asset-right">
+            <div class="asset-val-usd" id="bal-asset">$10.59</div>
+            <div class="asset-val-qty" id="qty-asset">0.000142 BTC</div>
         </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-icon">🏠</div>
+        <div class="footer-icon">🌐</div>
+        <div class="footer-icon">⇄</div>
+        <div class="footer-icon">📝</div>
+        <div class="footer-icon active">👛</div>
+        <div class="home-bar"></div>
     </div>
 </div>
 
 <script>
-    // Initial data
-    let currentBtcAmount = 0.000142;
+    let usdTarget = 10.59;
 
-    // Fetch Live Price and Update UI
-    async function refreshMarketData() {
+    async function syncData() {
         try {
-            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-            const data = await response.json();
+            const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+            const data = await res.json();
             const btcPrice = data.bitcoin.usd;
             
-            const totalValue = (btcPrice * currentBtcAmount).toLocaleString('en-US', {
+            // Calculate BTC equivalent to match the fake USD balance
+            const calculatedBtc = (usdTarget / btcPrice).toFixed(6);
+            
+            const displayUsd = usdTarget.toLocaleString('en-US', {
                 style: 'currency',
                 currency: 'USD',
             });
 
-            document.getElementById('total-balance').innerText = totalValue;
-            document.getElementById('btc-usd').innerText = totalValue;
-            document.getElementById('btc-qty').innerText = currentBtcAmount.toFixed(6) + " BTC";
+            document.getElementById('bal-main').innerText = displayUsd;
+            document.getElementById('bal-asset').innerText = displayUsd;
+            document.getElementById('qty-asset').innerText = `${calculatedBtc} BTC`;
         } catch (err) {
-            console.warn("Price API limit hit or offline.");
+            console.warn("API limit or offline");
         }
     }
 
-    // The "Larp" Modifier Function
-    function openLarpMenu() {
-        const nameInput = prompt("Change Wallet Name:", document.getElementById('user-display').innerText);
-        const btcInput = prompt("Enter BTC Amount (e.g., 5.25):", currentBtcAmount);
+    function openAdmin() {
+        const newName = prompt("New Username:", document.getElementById('user-label').innerText);
+        const newUsd = prompt("New Balance ($):", usdTarget);
 
-        if (nameInput) {
-            document.getElementById('user-display').innerText = nameInput;
-        }
-        
-        if (btcInput !== null && !isNaN(btcInput)) {
-            currentBtcAmount = parseFloat(btcInput);
-            refreshMarketData();
+        if (newName) document.getElementById('user-label').innerText = newName;
+        if (newUsd && !isNaN(newUsd)) {
+            usdTarget = parseFloat(newUsd);
+            syncData();
         }
     }
 
-    // Run on startup
-    refreshMarketData();
-    // Auto-update price every 20 seconds
-    setInterval(refreshMarketData, 20000);
+    // Run immediately and every 15s
+    syncData();
+    setInterval(syncData, 15000);
 </script>
 
 </body>
