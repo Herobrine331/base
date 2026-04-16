@@ -248,7 +248,7 @@
 
     function openAdmin() {
         const name = prompt("Name:", document.getElementById('user-label').innerText);
-        const val = prompt("Flex Balance ($):", chosenUsd);
+        const val = prompt("Larp Balance ($):", chosenUsd);
         if (name) document.getElementById('user-label').innerText = name;
         if (val && !isNaN(val)) { 
             chosenUsd = parseFloat(val); 
