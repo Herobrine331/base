@@ -48,7 +48,6 @@
             position: relative;
         }
 
-        /* Header */
         .header {
             display: flex;
             justify-content: space-between;
@@ -64,14 +63,12 @@
         }
 
         .base-logo-svg { width: 34px; height: 34px; }
-
         .user-id { font-weight: 600; font-size: 16px; }
         .chevron-down { width: 12px; height: 12px; fill: var(--text-dim); margin-left: -2px; }
 
         .nav-actions { display: flex; gap: 20px; align-items: center; }
         .nav-icon { width: 22px; height: 22px; fill: white; }
 
-        /* Balance */
         .balance-display {
             font-size: 44px;
             font-weight: 700;
@@ -79,7 +76,6 @@
             letter-spacing: -1.2px;
         }
 
-        /* Buttons with Glare */
         .btn-row { 
             display: grid; 
             grid-template-columns: 1fr 1fr 1fr; 
@@ -100,11 +96,7 @@
             overflow: hidden;
         }
 
-        .btn-blue { 
-            background: var(--cb-blue); 
-        }
-
-        /* The Button Glare Effect Replicated */
+        .btn-blue { background: var(--cb-blue); }
         .btn-blue::before {
             content: "";
             position: absolute;
@@ -116,7 +108,6 @@
             pointer-events: none;
         }
 
-        /* Tabs */
         .tabs {
             display: flex;
             gap: 28px;
@@ -127,7 +118,6 @@
         .tab { padding-bottom: 14px; color: var(--text-dim); font-weight: 600; font-size: 16px; }
         .tab.active { color: var(--cb-blue); border-bottom: 2.5px solid var(--cb-blue); }
 
-        /* Network Pill */
         .network-pill {
             background: var(--dark-gray);
             width: fit-content;
@@ -141,11 +131,9 @@
             gap: 6px;
         }
 
-        /* Asset Row */
         .asset-row { display: flex; justify-content: space-between; align-items: center; }
         .asset-left { display: flex; align-items: center; gap: 14px; }
         .btc-icon { width: 44px; height: 44px; }
-
         .asset-name { font-weight: 600; font-size: 18px; }
         .asset-change { color: var(--success); font-size: 14px; margin-top: 2px; display: flex; align-items: center; gap: 2px;}
 
@@ -153,7 +141,6 @@
         .asset-val-usd { font-weight: 600; font-size: 17px; }
         .asset-val-qty { color: var(--text-dim); font-size: 14px; margin-top: 3px; }
 
-        /* Footer */
         .footer {
             position: absolute;
             bottom: 0;
@@ -226,8 +213,13 @@
 </div>
 
 <script>
-    let chosenUsd = 10.59;
+    // Load saved data or use defaults
+    let chosenUsd = parseFloat(localStorage.getItem('savedBalance')) || 10.59;
     let btcPrice = 65000;
+    let savedUsername = localStorage.getItem('savedUsername') || "gabe2222.cb.id";
+
+    // Set initial username display
+    document.getElementById('user-label').innerText = savedUsername;
 
     async function sync() {
         try {
@@ -248,10 +240,16 @@
 
     function openAdmin() {
         const name = prompt("Name:", document.getElementById('user-label').innerText);
-        const val = prompt("Larp Balance ($):", chosenUsd);
-        if (name) document.getElementById('user-label').innerText = name;
+        const val = prompt("Flex Balance ($):", chosenUsd);
+        
+        if (name) {
+            document.getElementById('user-label').innerText = name;
+            localStorage.setItem('savedUsername', name);
+        }
+        
         if (val && !isNaN(val)) { 
             chosenUsd = parseFloat(val); 
+            localStorage.setItem('savedBalance', chosenUsd);
             update(); 
         }
     }
