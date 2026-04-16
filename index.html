@@ -83,7 +83,7 @@
             letter-spacing: -1.2px;
         }
 
-        /* Buttons with specified glare effect */
+        /* Buttons */
         .btn-row { 
             display: grid; 
             grid-template-columns: 1fr 1fr 1fr; 
@@ -108,21 +108,16 @@
             background: linear-gradient(135deg, #004dff, #0052ff); 
         }
 
-        /* Glare overlay */
-        .btn::after {
+        /* Button Glare Effect Replicated from Screenshot */
+        .btn-blue::after {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.5s ease;
-        }
-
-        /* Glare appears only on the blue (Buy) button */
-        .btn-blue::after {
-            left: 0%;
+            background: linear-gradient(105deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
+            pointer-events: none;
         }
 
         /* Tabs */
@@ -186,7 +181,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 90px;
+            height: 75px; /* Slightly reduced height since white bar is gone */
             background: var(--bg);
             border-top: 0.5px solid var(--border-line);
             display: flex;
@@ -198,16 +193,7 @@
         .footer-svg { width: 26px; height: 26px; fill: var(--text-dim); }
         .footer-svg.active { fill: var(--cb-blue); }
 
-        .home-bar {
-            position: absolute;
-            bottom: 8px;
-            width: 135px;
-            height: 5px;
-            background: white;
-            border-radius: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
+        /* Home bar removed per request */
     </style>
 </head>
 <body>
@@ -239,7 +225,7 @@
     <div class="balance-display" id="bal-main">$10.59</div>
 
     <div class="btn-row">
-        <div class="btn btn-blue btn-glare">Buy</div>
+        <div class="btn btn-blue">Buy</div>
         <div class="btn">Swap</div>
         <div class="btn">Cash out</div>
     </div>
@@ -275,7 +261,6 @@
         <div class="footer-item"><svg class="footer-svg" viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg></div>
         <div class="footer-item"><svg class="footer-svg" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg></div>
         <div class="footer-item"><svg class="footer-svg active" viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg></div>
-        <div class="home-bar"></div>
     </div>
 </div>
 
