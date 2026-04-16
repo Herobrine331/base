@@ -12,6 +12,7 @@
             --text-dim: #8e8e93;
             --success: #2ecc71;
             --border-line: #1a1a1a;
+            --icon-fill: #ffffff;
         }
 
         * { 
@@ -39,7 +40,7 @@
             position: relative;
         }
 
-        /* Header Area - Shifted to Top */
+        /* Header Area */
         .header {
             display: flex;
             justify-content: space-between;
@@ -64,18 +65,18 @@
             justify-content: center;
         }
 
-        .base-logo::after {
-            content: "";
-            width: 17px;
-            height: 17px;
+        .base-logo-inner {
+            width: 18px;
+            height: 18px;
             border: 3.5px solid white;
             border-radius: 50%;
         }
 
         .user-id { font-weight: 600; font-size: 16px; }
-        .chevron { color: var(--text-dim); font-size: 13px; margin-left: -2px; }
+        .chevron-down { width: 12px; height: 12px; fill: var(--text-dim); margin-left: -2px; }
 
-        .nav-actions { display: flex; gap: 20px; font-size: 22px; }
+        .nav-actions { display: flex; gap: 20px; align-items: center; }
+        .nav-icon { width: 22px; height: 22px; fill: white; }
 
         /* Balance Display */
         .balance-display {
@@ -85,7 +86,7 @@
             letter-spacing: -1.2px;
         }
 
-        /* Buttons (Buy, Swap, Cash out) */
+        /* Buttons */
         .btn-row { 
             display: grid; 
             grid-template-columns: 1fr 1fr 1fr; 
@@ -108,7 +109,7 @@
             background: linear-gradient(135deg, #004dff, #0052ff); 
         }
 
-        /* Tabs (Crypto, NFTs, DeFi) */
+        /* Tabs */
         .tabs {
             display: flex;
             gap: 28px;
@@ -139,10 +140,10 @@
             margin-bottom: 28px;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
         }
 
-        /* Bitcoin Asset Row */
+        /* Asset Row */
         .asset-row {
             display: flex;
             justify-content: space-between;
@@ -151,27 +152,19 @@
 
         .asset-left { display: flex; align-items: center; gap: 14px; }
         
-        .btc-icon {
+        .btc-icon-svg {
             width: 44px;
             height: 44px;
-            background: #f7931a;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 24px;
-            color: white;
         }
 
         .asset-name { font-weight: 600; font-size: 18px; }
-        .asset-change { color: var(--success); font-size: 14px; margin-top: 2px; }
+        .asset-change { color: var(--success); font-size: 14px; margin-top: 2px; display: flex; align-items: center; gap: 2px;}
 
         .asset-right { text-align: right; }
         .asset-val-usd { font-weight: 600; font-size: 17px; }
         .asset-val-qty { color: var(--text-dim); font-size: 14px; margin-top: 3px; }
 
-        /* Footer Navigation Bar */
+        /* Footer Navigation */
         .footer {
             position: absolute;
             bottom: 0;
@@ -183,11 +176,11 @@
             display: flex;
             justify-content: space-around;
             padding-top: 12px;
-            font-size: 26px;
         }
 
-        .footer-icon { color: var(--text-dim); }
-        .footer-icon.active { color: var(--cb-blue); }
+        .footer-item { display: flex; flex-direction: column; align-items: center; width: 20%; }
+        .footer-svg { width: 26px; height: 26px; fill: var(--text-dim); }
+        .footer-svg.active { fill: var(--cb-blue); }
 
         .home-bar {
             position: absolute;
@@ -206,17 +199,19 @@
 <div class="app">
     <div class="header">
         <div class="profile-btn" onclick="openAdmin()">
-            <div class="base-logo"></div>
+            <div class="base-logo"><div class="base-logo-inner"></div></div>
             <div class="user-id">
                 <span id="user-label">gabe2222.cb.id</span> 
-                <span class="chevron">⌵</span>
+                <svg class="chevron-down" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg>
             </div>
         </div>
         <div class="nav-actions">
-            <span>🔍</span><span>🔳</span>
-            <span style="position:relative;">⚙️
+            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M4 4h7v7H4zm9 0h7v7h-7zm0 9h7v7h-7zm-9 0h7v7H4z"/></svg>
+            <div style="position:relative;">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
                 <div style="width:9px; height:9px; background:#ff3b30; border-radius:50%; position:absolute; top:-2px; right:-2px; border:2.5px solid black;"></div>
-            </span>
+            </div>
         </div>
     </div>
 
@@ -234,14 +229,17 @@
         <div class="tab">DeFi</div>
     </div>
 
-    <div class="network-pill">Networks (2) <span style="font-size:10px; margin-left:2px;">⌵</span></div>
+    <div class="network-pill">Networks (2) <svg style="width:10px; height:10px; fill:white;" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg></div>
 
     <div class="asset-row">
         <div class="asset-left">
-            <div class="btc-icon">₿</div>
+            <svg class="btc-icon-svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#F7931A"/><path d="M22.292 13.561c.25-1.673-.524-2.571-1.416-3.172-.892-.6-2.088-.846-3.23-.974l.659-2.643-1.611-.401-.641 2.575c-.422-.105-.856-.205-1.286-.304l.646-2.595-1.61-.402-.659 2.643c-.35-.08-.691-.157-1.025-.239l.001-.005-2.221-.554-.429 1.72s1.195.274 1.17.291c.652.163.77.594.75.936l-.752 3.016c.045.011.103.028.167.053-.053-.013-.11-.028-.167-.042l-1.054 4.227c-.08.198-.281.496-.735.383.016.023-1.17-.292-1.17-.292l-.8 1.838 2.096.523c.39.098.771.199 1.146.293l-.666 2.673 1.611.401.659-2.641c.44.119.869.232 1.288.34l-.654 2.628 1.611.402.665-2.671c2.748.52 4.814.31 5.684-2.176.702-2.003-.035-3.158-1.483-3.913 1.056-.244 1.851-.938 2.064-2.37zm-3.692 5.185c-.498 2.003-3.87.92-4.964.648l.886-3.553c1.094.272 4.61.813 4.078 2.905zm.454-5.215c-.454 1.825-3.265.898-4.177.67l.804-3.222c.912.227 3.864.654 3.373 2.552z" fill="white"/></svg>
             <div>
                 <div class="asset-name">Bitcoin</div>
-                <div class="asset-change">↗ 0.07%</div>
+                <div class="asset-change">
+                    <svg style="width:12px; height:12px; fill:var(--success);" viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
+                    0.07%
+                </div>
             </div>
         </div>
         <div class="asset-right">
@@ -251,54 +249,52 @@
     </div>
 
     <div class="footer">
-        <div class="footer-icon">🏠</div>
-        <div class="footer-icon">🌐</div>
-        <div class="footer-icon">⇄</div>
-        <div class="footer-icon">📝</div>
-        <div class="footer-icon active">👛</div>
+        <div class="footer-item"><svg class="footer-svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></div>
+        <div class="footer-item"><svg class="footer-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+        <div class="footer-item"><svg class="footer-svg" viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg></div>
+        <div class="footer-item"><svg class="footer-svg" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg></div>
+        <div class="footer-item"><svg class="footer-svg active" viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg></div>
         <div class="home-bar"></div>
     </div>
 </div>
 
 <script>
-    let usdTarget = 10.59;
+    let chosenUsdBalance = 10.59;
+    let currentBtcPrice = 65000;
 
-    async function syncData() {
+    async function syncNumbers() {
         try {
             const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
             const data = await res.json();
-            const btcPrice = data.bitcoin.usd;
-            
-            // Calculate BTC equivalent to match the fake USD balance
-            const calculatedBtc = (usdTarget / btcPrice).toFixed(6);
-            
-            const displayUsd = usdTarget.toLocaleString('en-US', {
-                style: 'currency',
-                currency: 'USD',
-            });
+            currentBtcPrice = data.bitcoin.usd;
+        } catch (err) { console.warn("API Error"); }
+        updateUI();
+    }
 
-            document.getElementById('bal-main').innerText = displayUsd;
-            document.getElementById('bal-asset').innerText = displayUsd;
-            document.getElementById('qty-asset').innerText = `${calculatedBtc} BTC`;
-        } catch (err) {
-            console.warn("API limit or offline");
-        }
+    function updateUI() {
+        const formattedUsd = chosenUsdBalance.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+        const calculatedBtc = (chosenUsdBalance / currentBtcPrice).toFixed(8);
+
+        document.getElementById('bal-main').innerText = formattedUsd;
+        document.getElementById('bal-asset').innerText = formattedUsd;
+        document.getElementById('qty-asset').innerText = `${calculatedBtc} BTC`;
     }
 
     function openAdmin() {
-        const newName = prompt("New Username:", document.getElementById('user-label').innerText);
-        const newUsd = prompt("New Balance ($):", usdTarget);
-
+        const newName = prompt("Edit Username:", document.getElementById('user-label').innerText);
+        const newUsd = prompt("Enter USD to display:", chosenUsdBalance);
         if (newName) document.getElementById('user-label').innerText = newName;
-        if (newUsd && !isNaN(newUsd)) {
-            usdTarget = parseFloat(newUsd);
-            syncData();
+        if (newUsd !== null && !isNaN(newUsd)) {
+            chosenUsdBalance = parseFloat(newUsd);
+            updateUI();
         }
     }
 
-    // Run immediately and every 15s
-    syncData();
-    setInterval(syncData, 15000);
+    syncNumbers();
+    setInterval(syncNumbers, 20000);
 </script>
 
 </body>
